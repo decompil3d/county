@@ -16,7 +16,7 @@ const LaunchRequestHandler = {
   },
   handle(handlerInput) {
     const speechText = 
-      'Welcome to Count to Ten! Which language would you like me to count to ten in? You can say a language, or say \"help\" to get a list of supported languages.'
+      '<speak>Welcome to Count to Ten! Which language would you like me to count to ten in? You can say a language, or say <emphasis>help</emphasis> to get a list of supported languages.</speak>'
 
     handlerInput.responseBuilder
       .speak(speechText)
@@ -40,57 +40,67 @@ const LaunchRequestHandler = {
 
 function handleCountIntent(handlerInput, langIndex) {
   const lang = data.home.properties.languages[langIndex].ietf;
-  const speech = [];
-  for(let i = 1; i <= 10; i++) {
-    speech.push(`<lang xml:lang="${lang}"><say-as interpret-as="cardinal">${i}</say-as></lang><break time="500ms" />`);
-  }
 
   if (supportsAPL(handlerInput)) {
+    const commands = [
+      {
+        type: 'SetPage',
+        componentId: 'rootPager',
+        value: langIndex + 1
+      }
+    ];
+    for(let i = 0; i < 10; i++) {
+      commands.push({
+        type: 'SetPage',
+        componentId: 'numberPager',
+        value: i
+      }, {
+        type: 'SpeakItem',
+        componentId: 'number' + i
+      });
+    }
+    commands.push({
+      type: 'SetPage',
+      componentId: 'rootPager',
+      value: 0
+    });
+
     handlerInput.responseBuilder
       .addDirective({
         type: 'Alexa.Presentation.APL.ExecuteCommands',
         token: 'rootToken',
         commands: [
           {
-            type: 'SetPage',
-            componentId: 'rootPager',
-            value: langIndex + 1
-          },
-          {
-            type: 'AutoPage',
-            componentId: 'numberPager',
-            duration: 1000
+            type: 'Sequential',
+            commands
           }
         ]
       });
-  }
-
-  handlerInput.responseBuilder
-    .speak(speech.join(''));
-
-    if (supportsAPL(handlerInput)) {
-      handlerInput.responseBuilder
-        .addDirective({
-          type: 'Alexa.Presentation.APL.ExecuteCommands',
-          token: 'rootToken',
-          commands: [
-            {
-              type: 'SetPage',
-              componentId: 'rootPager',
-              value: 0
-            }
-          ]
-        });
+  } else {
+    const speech = [];
+    for(let i = 1; i <= 10; i++) {
+      speech.push(`<lang xml:lang="${lang}"><say-as interpret-as="cardinal">${i}</say-as></lang><break time="500ms" />`);
     }
+    speech.push('You can choose another language, or say <emphasis>exit</emphasis> to quit.');
+    handlerInput.responseBuilder
+    .speak('<speak>' + speech.join('') + '</speak>');
+  }
 
   return handlerInput.responseBuilder
     .getResponse();
 }
 
+function canHandleRequest(handlerInput, matchingIntentName, matchingPageNumber) {
+  return (handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && handlerInput.requestEnvelope.request.intent.name === matchingIntentName) ||
+      (handlerInput.requestEnvelope.request.type === 'Alexa.Presentation.APL.UserEvent'
+      && handlerInput.requestEnvelope.request.arguments[0] === 'choosePage'
+      && handlerInput.requestEnvelope.request.arguments[1] === matchingPageNumber);
+}
+
 const CountInEnglishIntentHandler = {
   canHandle(handlerInput) {
-    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
-      && handlerInput.requestEnvelope.request.intent.name === 'CountInEnglishIntent';
+    return canHandleRequest(handlerInput, 'CountInEnglishIntent', 1);
   },
   handle(handlerInput) {
     return handleCountIntent(handlerInput, 0);
@@ -99,8 +109,7 @@ const CountInEnglishIntentHandler = {
 
 const CountInSpanishIntentHandler = {
   canHandle(handlerInput) {
-    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
-      && handlerInput.requestEnvelope.request.intent.name === 'CountInSpanishIntent';
+    return canHandleRequest(handlerInput, 'CountInSpanishIntent', 2);
   },
   handle(handlerInput) {
     return handleCountIntent(handlerInput, 1);
@@ -109,8 +118,7 @@ const CountInSpanishIntentHandler = {
 
 const CountInGermanIntentHandler = {
   canHandle(handlerInput) {
-    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
-      && handlerInput.requestEnvelope.request.intent.name === 'CountInGermanIntent';
+    return canHandleRequest(handlerInput, 'CountInGermanIntent', 3);
   },
   handle(handlerInput) {
     return handleCountIntent(handlerInput, 2);
@@ -119,8 +127,7 @@ const CountInGermanIntentHandler = {
 
 const CountInItalianIntentHandler = {
   canHandle(handlerInput) {
-    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
-      && handlerInput.requestEnvelope.request.intent.name === 'CountInItalianIntent';
+    return canHandleRequest(handlerInput, 'CountInItalianIntent', 4);
   },
   handle(handlerInput) {
     return handleCountIntent(handlerInput, 3);
@@ -129,8 +136,7 @@ const CountInItalianIntentHandler = {
 
 const CountInJapaneseIntentHandler = {
   canHandle(handlerInput) {
-    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
-      && handlerInput.requestEnvelope.request.intent.name === 'CountInJapaneseIntent';
+    return canHandleRequest(handlerInput, 'CountInJapaneseIntent', 5);
   },
   handle(handlerInput) {
     return handleCountIntent(handlerInput, 4);
@@ -139,8 +145,7 @@ const CountInJapaneseIntentHandler = {
 
 const CountInFrenchIntentHandler = {
   canHandle(handlerInput) {
-    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
-      && handlerInput.requestEnvelope.request.intent.name === 'CountInFrenchIntent';
+    return canHandleRequest(handlerInput, 'CountInFrenchIntent', 6);
   },
   handle(handlerInput) {
     return handleCountIntent(handlerInput, 5);
@@ -162,6 +167,37 @@ const HelpIntentHandler = {
       .getResponse();
   },
 };
+
+const StartOverIntentHandler = {
+  canHandle(handlerInput) {
+    return canHandleRequest(handlerInput, 'AMAZON.StartOverIntent', 0);
+  },
+  handle(handlerInput) {
+    const speechText = 
+      'Welcome to Count to Ten! Which language would you like me to count to ten in? You can say a language, or say \"help\" to get a list of supported languages.'
+
+    handlerInput.responseBuilder
+      .speak(speechText)
+      .reprompt(speechText);
+
+    if (supportsAPL(handlerInput)) {
+      handlerInput.responseBuilder
+        .addDirective({
+          type: 'Alexa.Presentation.APL.ExecuteCommands',
+          token: 'rootToken',
+          commands: [
+            {
+              type: 'SetPage',
+              componentId: 'rootPager',
+              value: 0
+            }
+          ]
+        });
+    }
+
+    return handlerInput.responseBuilder.getResponse();
+  }
+}
 
 const CancelAndStopIntentHandler = {
   canHandle(handlerInput) {
@@ -215,6 +251,7 @@ exports.handler = skillBuilder
     CountInItalianIntentHandler,
     CountInJapaneseIntentHandler,
     CountInFrenchIntentHandler,
+    StartOverIntentHandler,
     HelpIntentHandler,
     CancelAndStopIntentHandler,
     SessionEndedRequestHandler

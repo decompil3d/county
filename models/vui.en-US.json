@@ -29,6 +29,12 @@
           ]
         },
         {
+          "name": "AMAZON.StartOverIntent",
+          "samples": [
+            "start over"
+          ]
+        },
+        {
           "name": "CountInEnglishIntent",
           "samples": [
             "count to ten in english",
