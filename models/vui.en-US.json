@@ -29,9 +29,51 @@
           ]
         },
         {
+          "name": "CountInEnglishIntent",
+          "samples": [
+            "count to ten in english",
+            "count in english",
+            "english"
+          ]
+        },
+        {
           "name": "CountInSpanishIntent",
           "samples": [
-            "count in spanish"
+            "count to ten in spanish",
+            "count in spanish",
+            "spanish"
+          ]
+        },
+        {
+          "name": "CountInGermanIntent",
+          "samples": [
+            "count to ten in german",
+            "count in german",
+            "german"
+          ]
+        },
+        {
+          "name": "CountInItalianIntent",
+          "samples": [
+            "count to ten in italian",
+            "count in italian",
+            "italian"
+          ]
+        },
+        {
+          "name": "CountInJapaneseIntent",
+          "samples": [
+            "count to ten in japanese",
+            "count in japanese",
+            "japanese"
+          ]
+        },
+        {
+          "name": "CountInFrenchIntent",
+          "samples": [
+            "count to ten in french",
+            "count in french",
+            "french"
           ]
         }
       ],

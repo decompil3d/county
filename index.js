@@ -42,10 +42,37 @@ function handleCountIntent(handlerInput, lang) {
     speech.push(`<lang xml:lang="${lang}"><say-as interpret-as="cardinal">${i}</say-as></lang><break time="500ms" />`);
   }
 
+  handlerInput.responseBuilder
+    .speak(speech.join(''));
+
+  if (supportsAPL(handlerInput)) {
+    handlerInput.responseBuilder
+      .addDirective({
+        type: 'Alexa.Presentation.APL.ExecuteCommands',
+        token: 'rootToken',
+        commands: [
+          {
+            type: 'AutoPage',
+            componentId: 'numberPager',
+            duration: 1000
+          }
+        ]
+      });
+  }
+
   return handlerInput.responseBuilder
-    .speak(speech.join(''))
     .getResponse();
 }
+
+const CountInEnglishIntentHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && handlerInput.requestEnvelope.request.intent.name === 'CountInEnglishIntent';
+  },
+  handle(handlerInput) {
+    return handleCountIntent(handlerInput, 'en-US');
+  }
+};
 
 const CountInSpanishIntentHandler = {
   canHandle(handlerInput) {
@@ -57,48 +84,44 @@ const CountInSpanishIntentHandler = {
   }
 };
 
-const ShowMetricConversionsIntentHandler = {
+const CountInGermanIntentHandler = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === 'IntentRequest'
-      && handlerInput.requestEnvelope.request.intent.name === 'ShowMetricConversionsIntent';
+      && handlerInput.requestEnvelope.request.intent.name === 'CountInGermanIntent';
   },
   handle(handlerInput) {
-    return handlerInput.responseBuilder
-      .addDirective({
-        type: 'Alexa.Presentation.APL.ExecuteCommands',
-        token: 'rootToken',
-        commands: [
-          {
-            type: 'SetPage',
-            componentId: 'rootPager',
-            value: 1
-          }
-        ]
-      })
-      .getResponse();
-  },
+    return handleCountIntent(handlerInput, 'de-DE');
+  }
 };
 
-const ShowUSMeasurementsIntentHandler = {
+const CountInItalianIntentHandler = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === 'IntentRequest'
-      && handlerInput.requestEnvelope.request.intent.name === 'ShowUSMeasurementsIntent';
+      && handlerInput.requestEnvelope.request.intent.name === 'CountInItalianIntent';
   },
   handle(handlerInput) {
-    return handlerInput.responseBuilder
-      .addDirective({
-        type: 'Alexa.Presentation.APL.ExecuteCommands',
-        token: 'rootToken',
-        commands: [
-          {
-            type: 'SetPage',
-            componentId: 'rootPager',
-            value: 0
-          }
-        ]
-      })
-      .getResponse();
+    return handleCountIntent(handlerInput, 'it-IT');
+  }
+};
+
+const CountInJapaneseIntentHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && handlerInput.requestEnvelope.request.intent.name === 'CountInJapaneseIntent';
   },
+  handle(handlerInput) {
+    return handleCountIntent(handlerInput, 'ja-JP');
+  }
+};
+
+const CountInFrenchIntentHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && handlerInput.requestEnvelope.request.intent.name === 'CountInFrenchIntent';
+  },
+  handle(handlerInput) {
+    return handleCountIntent(handlerInput, 'fr-FR');
+  }
 };
 
 const HelpIntentHandler = {
@@ -107,12 +130,12 @@ const HelpIntentHandler = {
       && handlerInput.requestEnvelope.request.intent.name === 'AMAZON.HelpIntent';
   },
   handle(handlerInput) {
-    const speechText = 'You can ask me to show metric conversions or U.S. measurements.';
+    const speechText = 'You can ask me to count in English, Spanish, German, Italian, Japanese, or French.';
 
     return handlerInput.responseBuilder
       .speak(speechText)
       .reprompt(speechText)
-      .withSimpleCard('MeasurePro', speechText)
+      .withSimpleCard('Count to Ten', speechText)
       .getResponse();
   },
 };
@@ -128,7 +151,7 @@ const CancelAndStopIntentHandler = {
 
     return handlerInput.responseBuilder
       .speak(speechText)
-      .withSimpleCard('MeasurePro', speechText)
+      .withSimpleCard('Count to Ten', speechText)
       .getResponse();
   },
 };
@@ -163,7 +186,12 @@ const skillBuilder = Alexa.SkillBuilders.custom();
 exports.handler = skillBuilder
   .addRequestHandlers(
     LaunchRequestHandler,
+    CountInEnglishIntentHandler,
     CountInSpanishIntentHandler,
+    CountInGermanIntentHandler,
+    CountInItalianIntentHandler,
+    CountInJapaneseIntentHandler,
+    CountInFrenchIntentHandler,
     HelpIntentHandler,
     CancelAndStopIntentHandler,
     SessionEndedRequestHandler

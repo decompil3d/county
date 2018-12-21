@@ -1,20 +1,79 @@
 {
-  "strings": {
+  "numbers": {
     "type": "object",
     "properties": {
-      "welcome": "Welcome to Count to Ten! Which language would you like me to count to ten in? You can say a language or help to get a list of supported languages.",
-      "hintTextToMetric": "ask MeasurePro to show me metric conversions",
-      "hintTextToUS": "ask MeasurePro to show me US measurements"
-    },
-    "transformers": [
-      {
-        "inputPath": "hintTextToMetric",
-        "transformer": "textToHint"
-      },
-      {
-        "inputPath": "hintTextToUS",
-        "transformer": "textToHint"
-      }
-    ]
+      "en": [
+        "one",
+        "two",
+        "three",
+        "four",
+        "five",
+        "six",
+        "seven",
+        "eight",
+        "nine",
+        "ten"
+      ],
+      "es": [
+        "uno",
+        "dos",
+        "tres",
+        "cuatro",
+        "cinco",
+        "seis",
+        "siete",
+        "ocho",
+        "nueve",
+        "diez"
+      ],
+      "de": [
+        "eins",
+        "zwei",
+        "drei",
+        "vier",
+        "fünf",
+        "sechs",
+        "sieben",
+        "acht",
+        "neun",
+        "zehn"
+      ],
+      "it": [
+        "uno",
+        "due",
+        "tre",
+        "quattro",
+        "cinque",
+        "sei",
+        "sette",
+        "otto",
+        "nove",
+        "dieci"
+      ],
+      "ja": [
+        "一 (ichi)",
+        "二 (ni)",
+        "三 (san)",
+        "四 (yon)",
+        "五 (go)",
+        "六 (roku)",
+        "七 (nana)",
+        "八 (hachi)",
+        "九 (ku)",
+        "十 (jū)"
+      ],
+      "fr": [
+        "un",
+        "deux",
+        "trois",
+        "quatre",
+        "cinq",
+        "six",
+        "sept",
+        "huit",
+        "neuf",
+        "dix"
+      ]
+    }
   }
 }
