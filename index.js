@@ -28,7 +28,8 @@ const LaunchRequestHandler = {
           type: 'Alexa.Presentation.APL.RenderDocument',
           token: 'rootToken',
           version: '1.0',
-          document: require('./models/apl.json')
+          document: require('./models/apl.json'),
+          datasources: data
         });
     }
 
