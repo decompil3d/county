@@ -2,6 +2,7 @@
 /* eslint-disable  no-console */
 
 const Alexa = require('ask-sdk-core');
+const data = require('./models/data.en-US.json');
 
 function supportsAPL(handlerInput) {
   const supportedInterfaces = handlerInput.requestEnvelope.context.System.device.supportedInterfaces;
@@ -36,14 +37,12 @@ const LaunchRequestHandler = {
   },
 };
 
-function handleCountIntent(handlerInput, lang) {
+function handleCountIntent(handlerInput, langIndex) {
+  const lang = data.home.properties.languages[langIndex].ietf;
   const speech = [];
   for(let i = 1; i <= 10; i++) {
     speech.push(`<lang xml:lang="${lang}"><say-as interpret-as="cardinal">${i}</say-as></lang><break time="500ms" />`);
   }
-
-  handlerInput.responseBuilder
-    .speak(speech.join(''));
 
   if (supportsAPL(handlerInput)) {
     handlerInput.responseBuilder
@@ -52,6 +51,11 @@ function handleCountIntent(handlerInput, lang) {
         token: 'rootToken',
         commands: [
           {
+            type: 'SetPage',
+            componentId: 'rootPager',
+            value: langIndex + 1
+          },
+          {
             type: 'AutoPage',
             componentId: 'numberPager',
             duration: 1000
@@ -59,6 +63,24 @@ function handleCountIntent(handlerInput, lang) {
         ]
       });
   }
+
+  handlerInput.responseBuilder
+    .speak(speech.join(''));
+
+    if (supportsAPL(handlerInput)) {
+      handlerInput.responseBuilder
+        .addDirective({
+          type: 'Alexa.Presentation.APL.ExecuteCommands',
+          token: 'rootToken',
+          commands: [
+            {
+              type: 'SetPage',
+              componentId: 'rootPager',
+              value: 0
+            }
+          ]
+        });
+    }
 
   return handlerInput.responseBuilder
     .getResponse();
@@ -70,7 +92,7 @@ const CountInEnglishIntentHandler = {
       && handlerInput.requestEnvelope.request.intent.name === 'CountInEnglishIntent';
   },
   handle(handlerInput) {
-    return handleCountIntent(handlerInput, 'en-US');
+    return handleCountIntent(handlerInput, 0);
   }
 };
 
@@ -80,7 +102,7 @@ const CountInSpanishIntentHandler = {
       && handlerInput.requestEnvelope.request.intent.name === 'CountInSpanishIntent';
   },
   handle(handlerInput) {
-    return handleCountIntent(handlerInput, 'es-ES');
+    return handleCountIntent(handlerInput, 1);
   }
 };
 
@@ -90,7 +112,7 @@ const CountInGermanIntentHandler = {
       && handlerInput.requestEnvelope.request.intent.name === 'CountInGermanIntent';
   },
   handle(handlerInput) {
-    return handleCountIntent(handlerInput, 'de-DE');
+    return handleCountIntent(handlerInput, 2);
   }
 };
 
@@ -100,7 +122,7 @@ const CountInItalianIntentHandler = {
       && handlerInput.requestEnvelope.request.intent.name === 'CountInItalianIntent';
   },
   handle(handlerInput) {
-    return handleCountIntent(handlerInput, 'it-IT');
+    return handleCountIntent(handlerInput, 3);
   }
 };
 
@@ -110,7 +132,7 @@ const CountInJapaneseIntentHandler = {
       && handlerInput.requestEnvelope.request.intent.name === 'CountInJapaneseIntent';
   },
   handle(handlerInput) {
-    return handleCountIntent(handlerInput, 'ja-JP');
+    return handleCountIntent(handlerInput, 4);
   }
 };
 
@@ -120,7 +142,7 @@ const CountInFrenchIntentHandler = {
       && handlerInput.requestEnvelope.request.intent.name === 'CountInFrenchIntent';
   },
   handle(handlerInput) {
-    return handleCountIntent(handlerInput, 'fr-FR');
+    return handleCountIntent(handlerInput, 5);
   }
 };
 

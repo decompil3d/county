@@ -1,4 +1,41 @@
 {
+  "home": {
+    "type": "object",
+    "properties": {
+      "languages": [
+        {
+          "name": "English",
+          "code": "en",
+          "ietf": "en-US"
+        },
+        {
+          "name": "Spanish",
+          "code": "es",
+          "ietf": "es-ES"
+        },
+        {
+          "name": "German",
+          "code": "de",
+          "ietf": "de-DE"
+        },
+        {
+          "name": "Italian",
+          "code": "it",
+          "ietf": "it-IT"
+        },
+        {
+          "name": "Japanese",
+          "code": "ja",
+          "ietf": "ja-JP"
+        },
+        {
+          "name": "French",
+          "code": "fr",
+          "ietf": "fr-FR"
+        }
+      ]
+    }
+  },
   "numbers": {
     "type": "object",
     "properties": {
