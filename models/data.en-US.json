@@ -1,0 +1,20 @@
+{
+  "strings": {
+    "type": "object",
+    "properties": {
+      "welcome": "Welcome to Count to Ten! Which language would you like me to count to ten in? You can say a language or help to get a list of supported languages.",
+      "hintTextToMetric": "ask MeasurePro to show me metric conversions",
+      "hintTextToUS": "ask MeasurePro to show me US measurements"
+    },
+    "transformers": [
+      {
+        "inputPath": "hintTextToMetric",
+        "transformer": "textToHint"
+      },
+      {
+        "inputPath": "hintTextToUS",
+        "transformer": "textToHint"
+      }
+    ]
+  }
+}

@@ -1,0 +1,324 @@
+{
+  "styles": {},
+  "type": "APL",
+  "version": "1.0",
+  "theme": "light",
+  "import": [
+    {
+      "name": "alexa-layouts",
+      "version": "1.0.0"
+    },
+    {
+      "name": "alexa-styles",
+      "version": "1.0.0"
+    },
+    {
+      "name": "alexa-viewport-profiles",
+      "version" : "1.0.0"
+    }
+  ],
+  "resources": [
+    {
+      "colors": {
+        "accent": "#C00",
+        "text": "#333"
+      },
+      "dimensions": {
+        "spacing": "8dp",
+        "bodySize": "26dp",
+        "headingSize": "30dp",
+        "hintSize": "26dp",
+        "titleSize": "40dp",
+        "mainBorderWidth": "0dp"
+      }
+    },
+    {
+      "when": "${@viewportProfile == @hubLandscapeLarge}",
+      "dimensions": {
+        "bodySize": "36dp",
+        "headingSize": "40dp",
+        "hintSize": "34dp",
+        "titleSize": "50dp"
+      }
+    },
+    {
+      "when": "${@viewportProfile == @tvLandscapeXLarge}",
+      "dimensions": {
+        "bodySize": "23dp",
+        "headingSize": "27dp",
+        "hintSize": "23dp",
+        "titleSize": "38dp"
+      }
+    },
+    {
+      "when": "${@viewportProfile == @hubRoundSmall}",
+      "dimensions": {
+        "bodySize": "18dp",
+        "headingSize": "22dp",
+        "hintSize": "18dp",
+        "titleSize": "25dp",
+        "mainBorderWidth": "3dp"
+      }
+    }
+  ],
+  "layouts": {
+    "MeasureProFooter": {
+      "description": "A footer with translucent background",
+      "parameters": [
+        {
+          "name": "hint",
+          "type": "string"
+        }
+      ],
+      "item": {
+        "type": "Frame",
+        "backgroundColor": "#FFFFFF66",
+        "item": {
+          "type": "Container",
+          "height": "12vh",
+          "justifyContent": "center",
+          "items": [
+            {
+              "type": "Text",
+              "text": "💬 ${hint}",
+              "paddingLeft": "5vw",
+              "fontSize": "@hintSize",
+              "fontStyle": "italic",
+              "color": "@accent"
+            }
+          ]
+        }
+      }
+    },
+    "MeasureProPage": {
+      "description": "A page containing some data and a footer",
+      "parameters": [
+        {
+          "name": "hint",
+          "type": "string"
+        },
+        {
+          "name": "measurements",
+          "type": "any"
+        }
+      ],
+      "items": [
+        {
+          "type": "Container",
+          "items": [
+            {
+              "type": "Container",
+              "when": "${@viewportProfile != @hubRoundSmall}",
+              "paddingTop": "5vh",
+              "paddingBottom": "5vh",
+              "paddingRight": "5vw",
+              "paddingLeft": "5vw",
+              "grow": 1,
+              "direction": "row",
+              "items": [
+                {
+                  "type": "Container",
+                  "grow": 1,
+                  "data": "${measurements.column1}",
+                  "items": [
+                    {
+                      "type": "Text",
+                      "color": "@text",
+                      "fontSize": "${data.heading && @headingSize || @bodySize}",
+                      "spacing": "@spacing",
+                      "text": "${data.heading || data.text}",
+                      "fontWeight": "${data.heading && 'bold' || 'normal'}"
+                    }
+                  ]
+                },
+                {
+                  "type": "Container",
+                  "grow": 1,
+                  "data": "${measurements.column2}",
+                  "items": [
+                    {
+                      "type": "Text",
+                      "color": "@text",
+                      "fontSize": "${data.heading && @headingSize || @bodySize}",
+                      "spacing": "@spacing",
+                      "text": "${data.heading || data.text}",
+                      "fontWeight": "${data.heading && 'bold' || 'normal'}"
+                    }
+                  ]
+                },
+                {
+                  "when": "${measurements.column3 != null}",
+                  "type": "Container",
+                  "grow": 1,
+                  "data": "${measurements.column3}",
+                  "items": [
+                    {
+                      "type": "Text",
+                      "color": "@text",
+                      "fontSize": "${data.heading && @headingSize || @bodySize}",
+                      "spacing": "@spacing",
+                      "text": "${data.heading || data.text}",
+                      "fontWeight": "${data.heading && 'bold' || 'normal'}"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "ScrollView",
+              "when": "${@viewportProfile == @hubRoundSmall}",
+              "grow": 1,
+              "item": {
+                "type": "Sequence",
+                "width": "100vw",
+                "items": [
+                  {
+                    "type": "Container",
+                    "data": "${measurements.column1}",
+                    "items": [
+                      {
+                        "type": "Text",
+                        "textAlign": "center",
+                        "color": "@text",
+                        "fontSize": "${data.heading && @headingSize || @bodySize}",
+                        "spacing": "@spacing",
+                        "text": "${data.heading || data.text}",
+                        "fontWeight": "${data.heading && 'bold' || 'normal'}"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Container",
+                    "data": "${measurements.column2}",
+                    "items": [
+                      {
+                        "type": "Text",
+                        "textAlign": "center",
+                        "color": "@text",
+                        "fontSize": "${data.heading && @headingSize || @bodySize}",
+                        "spacing": "@spacing",
+                        "text": "${data.heading || data.text}",
+                        "fontWeight": "${data.heading && 'bold' || 'normal'}"
+                      }
+                    ]
+                  },
+                  {
+                    "when": "${measurements.column3 != null}",
+                    "type": "Container",
+                    "data": "${measurements.column3}",
+                    "items": [
+                      {
+                        "type": "Text",
+                        "textAlign": "center",
+                        "color": "@text",
+                        "fontSize": "${data.heading && @headingSize || @bodySize}",
+                        "spacing": "@spacing",
+                        "text": "${data.heading || data.text}",
+                        "fontWeight": "${data.heading && 'bold' || 'normal'}"
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "type": "MeasureProFooter",
+              "when": "${@viewportProfile != @hubRoundSmall}",
+              "hint": "${hint}"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "mainTemplate": {
+    "parameters": [
+      "payload"
+    ],
+    "items": [
+      {
+        "type": "Container",
+        "items": [
+          {
+            "type": "Container",
+            "position": "absolute",
+            "top": 0,
+            "left": 0,
+            "width": "100vw",
+            "height": "100vh",
+            "items": [
+              {
+                "type": "Image",
+                "overlayColor": "#FFFFFFCC",
+                "scale": "best-fill",
+                "height": "100vh",
+                "width": "100vw",
+                "source": "https://decompil3d.github.io/measure-pro/1.jpg"
+              }
+            ]
+          },
+          {
+            "type": "Container",
+            "height": "100vh",
+            "items": [
+              {
+                "type": "Frame",
+                "when": "${@viewportProfile != @hubRoundSmall}",
+                "backgroundColor": "@accent",
+                "height": "2vh",
+                "width": "100vw"
+              },
+              {
+                "type": "Frame",
+                "backgroundColor": "#FFFFFF66",
+                "height": "15vh",
+                "item": {
+                  "type": "Container",
+                  "justifyContent": "spaceBetween",
+                  "alignItems": "center",
+                  "direction": "row",
+                  "height": "100%",
+                  "paddingLeft": "5vw",
+                  "paddingRight": "5vw",
+                  "items": [
+                    {
+                      "type": "Text",
+                      "color": "@text",
+                      "fontSize": "@titleSize",
+                      "textAlign": "${@viewportProfile != @hubRoundSmall ? 'auto' : 'center'}",
+                      "text": "MeasurePro",
+                      "grow": 1
+                    },
+                    {
+                      "type": "Text",
+                      "when": "${@viewportProfile != @hubRoundSmall}",
+                      "text": "🥄🥄🥄"
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "Pager",
+                "id": "rootPager",
+                "width": "100vw",
+                "grow": 1,
+                "items": [
+                  {
+                    "type": "MeasureProPage",
+                    "measurements": "${payload.us.properties}",
+                    "hint": "${payload.strings.properties.hintTextToMetric}"
+                  },
+                  {
+                    "type": "MeasureProPage",
+                    "measurements": "${payload.metric.properties}",
+                    "hint": "${payload.strings.properties.hintTextToUS}"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

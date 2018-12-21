@@ -1,0 +1,38 @@
+{
+  "name": "alexa-count-to-ten",
+  "version": "1.0.0",
+  "description": "A multimodal Alexa skill that counts to ten in a variety of languages",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 0",
+    "lint": "eslint *.js models/*.json",
+    "pretest": "npm run lint",
+    "build": "mkdir -p dist && zip -r -u dist/lambda.zip ./models ./node_modules ./*.js ./package.json ./LICENSE",
+    "prebuild": "npm run lint",
+    "deploy": "aws lambda update-function-code --function-name \"arn:aws:lambda:us-west-2:072032131665:function:aws-serverless-repository-alexaskillskitnodejsfact-NFGORG6WYBKY\" --zip-file \"fileb://./dist/lambda.zip\" --profile counttoten --region us-west-2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/decompil3d/alexa-count-to-ten.git"
+  },
+  "keywords": [
+    "alexa",
+    "count",
+    "multilingual",
+    "ten",
+    "apl"
+  ],
+  "author": "Jonathan Keslin <github@jonathankeslin.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/decompil3d/alexa-count-to-ten/issues"
+  },
+  "homepage": "https://github.com/decompil3d/alexa-count-to-ten#readme",
+  "dependencies": {
+    "ask-sdk": "^2.3.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.6.1",
+    "eslint-plugin-json": "^1.2.1"
+  }
+}
