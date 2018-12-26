@@ -76,11 +76,11 @@ function handleCountIntent(handlerInput, langIndex) {
     for(let i = 0; i < 10; i++) {
       commands.push({
         type: 'SetPage',
-        componentId: 'numberPager',
+        componentId: lang + 'numberPager',
         value: i
       }, {
         type: 'SpeakItem',
-        componentId: 'number' + i
+        componentId: lang + 'number' + i
       });
     }
     commands.push({
@@ -107,7 +107,7 @@ function handleCountIntent(handlerInput, langIndex) {
     }
     speech.push('You can choose another language, or say <emphasis>exit</emphasis> to quit.');
     handlerInput.responseBuilder
-    .speak('<speak>' + speech.join('') + '</speak>');
+      .speak('<speak>' + speech.join('') + '</speak>');
   }
 
   return handlerInput.responseBuilder

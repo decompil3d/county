@@ -254,7 +254,7 @@
               "grow": 1,
               "item": {
                 "type": "Pager",
-                "id": "numberPager",
+                "id": "${ietf}numberPager",
                 "data": "${numbers}",
                 "navigation": "none",
                 "items": [
@@ -266,7 +266,7 @@
                         "fontSize": "@numberSize",
                         "text": "${index + 1}",
                         "speech": "${data.numberSpeech}",
-                        "id": "number${index + 1}"
+                        "id": "${ietf}number${index + 1}"
                       },
                       {
                         "type": "Text",
