@@ -36,10 +36,10 @@
       ]
     }
   },
-  "numbers": {
+  "en": {
     "type": "object",
     "properties": {
-      "en": [
+      "numbers": [
         {
           "word": "one",
           "numberSsml": "<speak><lang xml:lang='en-US'><say-as interpret-as='cardinal'>1</say-as></lang></speak>"
@@ -80,8 +80,20 @@
           "word": "ten",
           "numberSsml": "<speak><lang xml:lang='en-US'><say-as interpret-as='cardinal'>10</say-as></lang></speak>"
         }
-      ],
-      "es": [
+      ]
+    },
+    "transformers": [
+      {
+        "inputPath": "numbers[*].numberSsml",
+        "outputName": "speech",
+        "transformer": "ssmlToSpeech"
+      }
+    ]
+  },
+  "es": {
+    "type": "object",
+    "properties": {
+      "numbers": [
         {
           "word": "uno",
           "numberSsml": "<speak><lang xml:lang='es-ES'><say-as interpret-as='cardinal'>1</say-as></lang></speak>"
@@ -122,8 +134,20 @@
           "word": "diez",
           "numberSsml": "<speak><lang xml:lang='es-ES'><say-as interpret-as='cardinal'>10</say-as></lang></speak>"
         }
-      ],
-      "de": [
+      ]
+    },
+    "transformers": [
+      {
+        "inputPath": "numbers[*].numberSsml",
+        "outputName": "speech",
+        "transformer": "ssmlToSpeech"
+      }
+    ]
+  },
+  "de": {
+    "type": "object",
+    "properties": {
+      "numbers": [
         {
           "word": "eins",
           "numberSsml": "<speak><lang xml:lang='de-DE'><say-as interpret-as='cardinal'>1</say-as></lang></speak>"
@@ -164,8 +188,20 @@
           "word": "zehn",
           "numberSsml": "<speak><lang xml:lang='de-DE'><say-as interpret-as='cardinal'>10</say-as></lang></speak>"
         }
-      ],
-      "it": [
+      ]
+    },
+    "transformers": [
+      {
+        "inputPath": "numbers[*].numberSsml",
+        "outputName": "speech",
+        "transformer": "ssmlToSpeech"
+      }
+    ]
+  },
+  "it": {
+    "type": "object",
+    "properties": {
+      "numbers": [
         {
           "word": "uno",
           "numberSsml": "<speak><lang xml:lang='it-IT'><say-as interpret-as='cardinal'>1</say-as></lang></speak>"
@@ -206,8 +242,20 @@
           "word": "dieci",
           "numberSsml": "<speak><lang xml:lang='it-IT'><say-as interpret-as='cardinal'>10</say-as></lang></speak>"
         }
-      ],
-      "ja": [
+      ]
+    },
+    "transformers": [
+      {
+        "inputPath": "numbers[*].numberSsml",
+        "outputName": "speech",
+        "transformer": "ssmlToSpeech"
+      }
+    ]
+  },
+  "ja": {
+    "type": "object",
+    "properties": {
+      "numbers": [
         {
           "word": "一 (ichi)",
           "numberSsml": "<speak><lang xml:lang='ja-JP'><say-as interpret-as='cardinal'>1</say-as></lang></speak>"
@@ -248,8 +296,20 @@
           "word": "十 (jū)",
           "numberSsml": "<speak><lang xml:lang='ja-JP'><say-as interpret-as='cardinal'>10</say-as></lang></speak>"
         }
-      ],
-      "fr": [
+      ]
+    },
+    "transformers": [
+      {
+        "inputPath": "numbers[*].numberSsml",
+        "outputName": "speech",
+        "transformer": "ssmlToSpeech"
+      }
+    ]
+  },
+  "fr": {
+    "type": "object",
+    "properties": {
+      "numbers": [
         {
           "word": "un",
           "numberSsml": "<speak><lang xml:lang='fr-FR'><say-as interpret-as='cardinal'>1</say-as></lang></speak>"
@@ -294,7 +354,7 @@
     },
     "transformers": [
       {
-        "inputPath": "en[*].numberSsml",
+        "inputPath": "numbers[*].numberSsml",
         "outputName": "speech",
         "transformer": "ssmlToSpeech"
       }

@@ -333,37 +333,37 @@
                   },
                   {
                     "type": "LanguagePage",
-                    "numbers": "${payload.numbers.properties.en}",
+                    "numbers": "${payload.en.properties.numbers}",
                     "ietf": "en-US",
                     "language": "English"
                   },
                   {
                     "type": "LanguagePage",
-                    "numbers": "${payload.numbers.properties.es}",
+                    "numbers": "${payload.es.properties.numbers}",
                     "ietf": "es-ES",
                     "language": "Spanish"
                   },
                   {
                     "type": "LanguagePage",
-                    "numbers": "${payload.numbers.properties.de}",
+                    "numbers": "${payload.de.properties.numbers}",
                     "ietf": "de-DE",
                     "language": "German"
                   },
                   {
                     "type": "LanguagePage",
-                    "numbers": "${payload.numbers.properties.it}",
+                    "numbers": "${payload.it.properties.numbers}",
                     "ietf": "it-IT",
                     "language": "Italian"
                   },
                   {
                     "type": "LanguagePage",
-                    "numbers": "${payload.numbers.properties.ja}",
+                    "numbers": "${payload.ja.properties.numbers}",
                     "ietf": "ja-JP",
                     "language": "Japanese"
                   },
                   {
                     "type": "LanguagePage",
-                    "numbers": "${payload.numbers.properties.fr}",
+                    "numbers": "${payload.fr.properties.numbers}",
                     "ietf": "fr-FR",
                     "language": "French"
                   }
