@@ -59,14 +59,6 @@
           ]
         },
         {
-          "name": "CountInItalianIntent",
-          "samples": [
-            "count to ten in italian",
-            "count in italian",
-            "italian"
-          ]
-        },
-        {
           "name": "CountInJapaneseIntent",
           "samples": [
             "count to ten in japanese",

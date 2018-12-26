@@ -2,12 +2,34 @@
 /* eslint-disable  no-console */
 
 const Alexa = require('ask-sdk-core');
-const data = require('./models/data.en-US.json');
+const data = transformData(require('./models/data.en-US.json'));
 
 function supportsAPL(handlerInput) {
   const supportedInterfaces = handlerInput.requestEnvelope.context.System.device.supportedInterfaces;
   const aplInterface = supportedInterfaces['Alexa.Presentation.APL'];
   return aplInterface!= null && aplInterface != undefined;
+}
+
+function transformData(initialData) {
+  initialData.numbers.transformers = [];
+
+  initialData.home.properties.languages.forEach(language => {
+    const transformedNumbers = initialData.numbers.properties[language.code].map((word, i) => {
+      return {
+        word,
+        numberSsml:
+          `<speak><lang xml:lang="${language.ietf}"><say-as interpret-as="cardinal">${i + 1}</say-as></lang></speak>`
+      };
+    });
+    initialData.numbers.properties[language.code] = transformedNumbers;
+    initialData.numbers.transformers.push({
+      inputPath: `${language.code}[*].numberSsml`,
+      outputName: 'numberSpeech',
+      transformer: 'ssmlToSpeech'
+    });
+  });
+
+  return initialData;
 }
 
 const LaunchRequestHandler = {
@@ -33,8 +55,10 @@ const LaunchRequestHandler = {
         });
     }
 
-    return handlerInput.responseBuilder
+    const response = handlerInput.responseBuilder
       .getResponse();
+
+    return response;
   },
 };
 
@@ -125,30 +149,21 @@ const CountInGermanIntentHandler = {
   }
 };
 
-const CountInItalianIntentHandler = {
+const CountInJapaneseIntentHandler = {
   canHandle(handlerInput) {
-    return canHandleRequest(handlerInput, 'CountInItalianIntent', 4);
+    return canHandleRequest(handlerInput, 'CountInJapaneseIntent', 4);
   },
   handle(handlerInput) {
     return handleCountIntent(handlerInput, 3);
   }
 };
 
-const CountInJapaneseIntentHandler = {
+const CountInFrenchIntentHandler = {
   canHandle(handlerInput) {
-    return canHandleRequest(handlerInput, 'CountInJapaneseIntent', 5);
+    return canHandleRequest(handlerInput, 'CountInFrenchIntent', 5);
   },
   handle(handlerInput) {
     return handleCountIntent(handlerInput, 4);
-  }
-};
-
-const CountInFrenchIntentHandler = {
-  canHandle(handlerInput) {
-    return canHandleRequest(handlerInput, 'CountInFrenchIntent', 6);
-  },
-  handle(handlerInput) {
-    return handleCountIntent(handlerInput, 5);
   }
 };
 
@@ -158,7 +173,7 @@ const HelpIntentHandler = {
       && handlerInput.requestEnvelope.request.intent.name === 'AMAZON.HelpIntent';
   },
   handle(handlerInput) {
-    const speechText = 'You can ask me to count in English, Spanish, German, Italian, Japanese, or French.';
+    const speechText = 'You can ask me to count in English, Spanish, German, Japanese, or French.';
 
     return handlerInput.responseBuilder
       .speak(speechText)
@@ -248,7 +263,6 @@ exports.handler = skillBuilder
     CountInEnglishIntentHandler,
     CountInSpanishIntentHandler,
     CountInGermanIntentHandler,
-    CountInItalianIntentHandler,
     CountInJapaneseIntentHandler,
     CountInFrenchIntentHandler,
     StartOverIntentHandler,

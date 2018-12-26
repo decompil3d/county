@@ -265,7 +265,7 @@
                         "type": "Text",
                         "fontSize": "@numberSize",
                         "text": "${index + 1}",
-                        "speech": "${data.speech}",
+                        "speech": "${data.numberSpeech}",
                         "id": "number${index + 1}"
                       },
                       {
@@ -333,37 +333,31 @@
                   },
                   {
                     "type": "LanguagePage",
-                    "numbers": "${payload.en.properties.numbers}",
+                    "numbers": "${payload.numbers.properties.en}",
                     "ietf": "en-US",
                     "language": "English"
                   },
                   {
                     "type": "LanguagePage",
-                    "numbers": "${payload.es.properties.numbers}",
+                    "numbers": "${payload.numbers.properties.es}",
                     "ietf": "es-ES",
                     "language": "Spanish"
                   },
                   {
                     "type": "LanguagePage",
-                    "numbers": "${payload.de.properties.numbers}",
+                    "numbers": "${payload.numbers.properties.de}",
                     "ietf": "de-DE",
                     "language": "German"
                   },
                   {
                     "type": "LanguagePage",
-                    "numbers": "${payload.it.properties.numbers}",
-                    "ietf": "it-IT",
-                    "language": "Italian"
-                  },
-                  {
-                    "type": "LanguagePage",
-                    "numbers": "${payload.ja.properties.numbers}",
+                    "numbers": "${payload.numbers.properties.ja}",
                     "ietf": "ja-JP",
                     "language": "Japanese"
                   },
                   {
                     "type": "LanguagePage",
-                    "numbers": "${payload.fr.properties.numbers}",
+                    "numbers": "${payload.numbers.properties.fr}",
                     "ietf": "fr-FR",
                     "language": "French"
                   }
