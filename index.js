@@ -3,6 +3,7 @@
 
 const Alexa = require('ask-sdk-core');
 const data = transformData(require('./models/data.en-US.json'));
+const counterDocument = require('./models/counter.apl.json');
 
 function supportsAPL(handlerInput) {
   const supportedInterfaces = handlerInput.requestEnvelope.context.System.device.supportedInterfaces;
@@ -22,14 +23,20 @@ function transformData(initialData) {
       };
     });
     initialData.numbers.properties[language.code] = transformedNumbers;
-    initialData.numbers.transformers.push({
-      inputPath: `${language.code}[*].numberSsml`,
-      outputName: 'numberSpeech',
-      transformer: 'ssmlToSpeech'
-    });
   });
 
   return initialData;
+}
+
+function renderHome(handlerInput) {
+  handlerInput.responseBuilder
+    .addDirective({
+      type: 'Alexa.Presentation.APL.RenderDocument',
+      token: 'homeToken',
+      version: '1.0',
+      document: require('./models/home.apl.json'),
+      datasources: data
+    });
 }
 
 const LaunchRequestHandler = {
@@ -45,14 +52,7 @@ const LaunchRequestHandler = {
       .reprompt(speechText);
 
     if (supportsAPL(handlerInput)) {
-      handlerInput.responseBuilder
-        .addDirective({
-          type: 'Alexa.Presentation.APL.RenderDocument',
-          token: 'rootToken',
-          version: '1.0',
-          document: require('./models/apl.json'),
-          datasources: data
-        });
+      renderHome(handlerInput);
     }
 
     const response = handlerInput.responseBuilder
@@ -63,36 +63,55 @@ const LaunchRequestHandler = {
 };
 
 function handleCountIntent(handlerInput, langIndex) {
-  const lang = data.home.properties.languages[langIndex].ietf;
+  const { name, ietf, code } = data.home.properties.languages[langIndex];
 
   if (supportsAPL(handlerInput)) {
-    const commands = [
-      {
-        type: 'SetPage',
-        componentId: 'rootPager',
-        value: langIndex + 1
-      }
-    ];
+    const token = ietf + 'counterToken';
+    handlerInput.responseBuilder
+      .addDirective({
+        type: 'Alexa.Presentation.APL.RenderDocument',
+        token,
+        version: '1.0',
+        document: counterDocument,
+        datasources: {
+          selectedNumbers: {
+            type: 'object',
+            properties: {
+              numbers: data.numbers.properties[code],
+              name,
+              ietf
+            },
+            transformers: [
+              {
+                inputPath: 'numbers[*].numberSsml',
+                outputName: 'numberSpeech',
+                transformer: 'ssmlToSpeech'
+              }
+            ]
+          }
+        }
+      });
+
+    const commands = [];
     for(let i = 0; i < 10; i++) {
       commands.push({
         type: 'SetPage',
-        componentId: lang + 'numberPager',
+        componentId: 'numberPager',
         value: i
       }, {
         type: 'SpeakItem',
-        componentId: lang + 'number' + i
+        componentId: 'number' + (i + 1)
       });
     }
     commands.push({
-      type: 'SetPage',
-      componentId: 'rootPager',
-      value: 0
+      type: 'Idle',
+      delay: 1500
     });
 
     handlerInput.responseBuilder
       .addDirective({
         type: 'Alexa.Presentation.APL.ExecuteCommands',
-        token: 'rootToken',
+        token,
         commands: [
           {
             type: 'Sequential',
@@ -100,10 +119,12 @@ function handleCountIntent(handlerInput, langIndex) {
           }
         ]
       });
+
+    renderHome(handlerInput);
   } else {
     const speech = [];
     for(let i = 1; i <= 10; i++) {
-      speech.push(`<lang xml:lang="${lang}"><say-as interpret-as="cardinal">${i}</say-as></lang><break time="500ms" />`);
+      speech.push(`<lang xml:lang="${ietf}"><say-as interpret-as="cardinal">${i}</say-as></lang><break time="500ms" />`);
     }
     speech.push('You can choose another language, or say <emphasis>exit</emphasis> to quit.');
     handlerInput.responseBuilder
