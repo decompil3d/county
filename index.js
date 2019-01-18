@@ -18,6 +18,7 @@ function transformData(initialData) {
     const transformedNumbers = initialData.numbers.properties[language.code].map((word, i) => {
       return {
         word,
+        number: i + 1,
         numberSsml:
           `<speak><lang xml:lang="${language.ietf}"><say-as interpret-as="cardinal">${i + 1}</say-as></lang></speak>`
       };
@@ -45,7 +46,7 @@ const LaunchRequestHandler = {
   },
   handle(handlerInput) {
     const speechText = 
-      '<speak>Welcome to Count to Ten! Which language would you like me to count to ten in? You can say a language, or say <emphasis>help</emphasis> to get a list of supported languages.</speak>'
+      '<speak>Welcome to County! Which language would you like me to count to ten in? You can say a language, or say <emphasis>help</emphasis> to get a list of supported languages.</speak>'
 
     handlerInput.responseBuilder
       .speak(speechText)
@@ -97,7 +98,8 @@ function handleCountIntent(handlerInput, langIndex) {
       commands.push({
         type: 'SetPage',
         componentId: 'numberPager',
-        value: i
+        value: i,
+        position: 'absolute'
       }, {
         type: 'SpeakItem',
         componentId: 'number' + (i + 1)
@@ -126,12 +128,15 @@ function handleCountIntent(handlerInput, langIndex) {
     for(let i = 1; i <= 10; i++) {
       speech.push(`<lang xml:lang="${ietf}"><say-as interpret-as="cardinal">${i}</say-as></lang><break time="500ms" />`);
     }
-    speech.push('You can choose another language, or say <emphasis>exit</emphasis> to quit.');
+    const instructions = 'You can choose another language, or say <emphasis>exit</emphasis> to quit.';
+    speech.push(instructions);
     handlerInput.responseBuilder
-      .speak('<speak>' + speech.join('') + '</speak>');
+      .speak('<speak>' + speech.join('') + '</speak>')
+      .reprompt('<speak>' + instructions + '</speak>');
   }
 
   return handlerInput.responseBuilder
+    .withShouldEndSession(false)
     .getResponse();
 }
 
@@ -210,25 +215,14 @@ const StartOverIntentHandler = {
   },
   handle(handlerInput) {
     const speechText = 
-      'Welcome to Count to Ten! Which language would you like me to count to ten in? You can say a language, or say \"help\" to get a list of supported languages.'
+      'Welcome to County! Which language would you like me to count to ten in? You can say a language, or say \"help\" to get a list of supported languages.'
 
     handlerInput.responseBuilder
       .speak(speechText)
       .reprompt(speechText);
 
     if (supportsAPL(handlerInput)) {
-      handlerInput.responseBuilder
-        .addDirective({
-          type: 'Alexa.Presentation.APL.ExecuteCommands',
-          token: 'rootToken',
-          commands: [
-            {
-              type: 'SetPage',
-              componentId: 'rootPager',
-              value: 0
-            }
-          ]
-        });
+      renderHome(handlerInput);
     }
 
     return handlerInput.responseBuilder.getResponse();
@@ -246,7 +240,7 @@ const CancelAndStopIntentHandler = {
 
     return handlerInput.responseBuilder
       .speak(speechText)
-      .withSimpleCard('Count to Ten', speechText)
+      .withSimpleCard('County', speechText)
       .getResponse();
   },
 };

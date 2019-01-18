@@ -135,9 +135,9 @@
                     {
                       "type": "Text",
                       "fontSize": "@numberSize",
-                      "text": "${index + 1}",
+                      "text": "${data.number}",
                       "speech": "${data.numberSpeech}",
-                      "id": "number${index + 1}"
+                      "id": "number${data.number}"
                     },
                     {
                       "type": "Text",

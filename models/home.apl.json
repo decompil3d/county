@@ -92,7 +92,7 @@
                     "color": "@text",
                     "fontSize": "@titleSize",
                     "textAlign": "${@viewportProfile != @hubRoundSmall ? 'auto' : 'center'}",
-                    "text": "Count to Ten",
+                    "text": "County",
                     "grow": 1
                   }
                 ]
