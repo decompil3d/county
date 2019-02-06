@@ -1,81 +1,95 @@
 {
   "interactionModel": {
-    "languageModel": {
-      "invocationName": "county",
-      "intents": [
-        {
-          "name": "AMAZON.FallbackIntent",
-          "samples": []
-        },
-        {
-          "name": "AMAZON.CancelIntent",
-          "samples": []
-        },
-        {
-          "name": "AMAZON.HelpIntent",
-          "samples": [
-            "help"
-          ]
-        },
-        {
-          "name": "AMAZON.StopIntent",
-          "samples": []
-        },
-        {
-          "name": "AMAZON.NavigateHomeIntent",
-          "samples": [
-            "go home",
-            "home"
-          ]
-        },
-        {
-          "name": "AMAZON.StartOverIntent",
-          "samples": [
-            "start over"
-          ]
-        },
-        {
-          "name": "CountInEnglishIntent",
-          "samples": [
-            "count to ten in english",
-            "count in english",
-            "english"
-          ]
-        },
-        {
-          "name": "CountInSpanishIntent",
-          "samples": [
-            "count to ten in spanish",
-            "count in spanish",
-            "spanish"
-          ]
-        },
-        {
-          "name": "CountInGermanIntent",
-          "samples": [
-            "count to ten in german",
-            "count in german",
-            "german"
-          ]
-        },
-        {
-          "name": "CountInJapaneseIntent",
-          "samples": [
-            "count to ten in japanese",
-            "count in japanese",
-            "japanese"
-          ]
-        },
-        {
-          "name": "CountInFrenchIntent",
-          "samples": [
-            "count to ten in french",
-            "count in french",
-            "french"
-          ]
-        }
-      ],
-      "types": []
-    }
+      "languageModel": {
+          "invocationName": "count ten",
+          "intents": [
+              {
+                  "name": "AMAZON.FallbackIntent",
+                  "samples": []
+              },
+              {
+                  "name": "AMAZON.CancelIntent",
+                  "samples": []
+              },
+              {
+                  "name": "AMAZON.HelpIntent",
+                  "samples": [
+                      "help"
+                  ]
+              },
+              {
+                  "name": "AMAZON.StopIntent",
+                  "samples": []
+              },
+              {
+                  "name": "AMAZON.NavigateHomeIntent",
+                  "samples": [
+                      "go home",
+                      "home"
+                  ]
+              },
+              {
+                  "name": "AMAZON.StartOverIntent",
+                  "samples": [
+                      "start over"
+                  ]
+              },
+              {
+                  "name": "CountInEnglishIntent",
+                  "slots": [],
+                  "samples": [
+                      "count to ten in english",
+                      "count in english",
+                      "english"
+                  ]
+              },
+              {
+                  "name": "CountInSpanishIntent",
+                  "slots": [],
+                  "samples": [
+                      "count to ten in spanish",
+                      "count in spanish",
+                      "spanish"
+                  ]
+              },
+              {
+                  "name": "CountInGermanIntent",
+                  "slots": [],
+                  "samples": [
+                      "count to ten in german",
+                      "count in german",
+                      "german"
+                  ]
+              },
+              {
+                  "name": "CountInItalianIntent",
+                  "slots": [],
+                  "samples": [
+                      "count to ten in italian",
+                      "count in italian",
+                      "italian"
+                  ]
+              },
+              {
+                  "name": "CountInJapaneseIntent",
+                  "slots": [],
+                  "samples": [
+                      "count to ten in japanese",
+                      "count in japanese",
+                      "japanese"
+                  ]
+              },
+              {
+                  "name": "CountInFrenchIntent",
+                  "slots": [],
+                  "samples": [
+                      "count to ten in french",
+                      "count in french",
+                      "french"
+                  ]
+              }
+          ],
+          "types": []
+      }
   }
 }

@@ -46,7 +46,7 @@ const LaunchRequestHandler = {
   },
   handle(handlerInput) {
     const speechText = 
-      '<speak>Welcome to County! Which language would you like me to count to ten in? You can say a language, or say <emphasis>help</emphasis> to get a list of supported languages.</speak>'
+      '<speak>Welcome to Poly Count! Which language would you like me to count to ten in? You can say a language, or say <emphasis>help</emphasis> to get a list of supported languages.</speak>'
 
     handlerInput.responseBuilder
       .speak(speechText)
@@ -215,7 +215,7 @@ const StartOverIntentHandler = {
   },
   handle(handlerInput) {
     const speechText = 
-      'Welcome to County! Which language would you like me to count to ten in? You can say a language, or say \"help\" to get a list of supported languages.'
+      'Welcome to Poly Count! Which language would you like me to count to ten in? You can say a language, or say \"help\" to get a list of supported languages.'
 
     handlerInput.responseBuilder
       .speak(speechText)
