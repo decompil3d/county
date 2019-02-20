@@ -123,7 +123,7 @@
                           "type": "Image",
                           "height": "@flagHeight",
                           "width": "@flagWidth",
-                          "source": "https://decompil3d.github.io/county/${data.code}.svg"
+                          "source": "https://decompil3d.github.io/county/${data.code}.png"
                         },
                         {
                           "type": "Text",
