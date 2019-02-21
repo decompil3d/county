@@ -31,6 +31,20 @@
       ]
     }
   },
+  "strings": {
+    "type": "object",
+    "properties": {
+      "continueInstructions": "Would you like to try again? You can say \"choose another language\" or \"go home\".",
+      "continueInstructionsSsml": "Would you like to try again? You can say <emphasis>choose another language</emphasis> or <emphasis>go home</emphasis>."
+    },
+    "transformers": [
+      {
+        "inputPath": "continueInstructionsSsml",
+        "outputName": "continueInstructionsSpeech",
+        "transformer": "ssmlToSpeech"
+      }
+    ]
+  },
   "numbers": {
     "type": "object",
     "properties": {

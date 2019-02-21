@@ -64,6 +64,7 @@ const LaunchRequestHandler = {
 };
 
 function handleCountIntent(handlerInput, langIndex) {
+  console.log('Handle count intent for langIndex:', langIndex);
   const { name, ietf, code } = data.home.properties.languages[langIndex];
 
   if (supportsAPL(handlerInput)) {
@@ -89,12 +90,13 @@ function handleCountIntent(handlerInput, langIndex) {
                 transformer: 'ssmlToSpeech'
               }
             ]
-          }
+          },
+          strings: data.strings
         }
       });
 
     const commands = [];
-    for(let i = 0; i < 10; i++) {
+    for(let i = 0; i < 11; i++) {
       commands.push({
         type: 'SetPage',
         componentId: 'numberPager',
@@ -105,10 +107,6 @@ function handleCountIntent(handlerInput, langIndex) {
         componentId: 'number' + (i + 1)
       });
     }
-    commands.push({
-      type: 'Idle',
-      delay: 1500
-    });
 
     handlerInput.responseBuilder
       .addDirective({
@@ -121,8 +119,6 @@ function handleCountIntent(handlerInput, langIndex) {
           }
         ]
       });
-
-    renderHome(handlerInput);
   } else {
     const speech = [];
     for(let i = 1; i <= 10; i++) {
@@ -135,17 +131,22 @@ function handleCountIntent(handlerInput, langIndex) {
       .reprompt('<speak>' + instructions + '</speak>');
   }
 
-  return handlerInput.responseBuilder
+  const res = handlerInput.responseBuilder
     .withShouldEndSession(false)
     .getResponse();
+
+  console.log('Response: ', JSON.stringify(res, null, 2));
+  return res;
 }
 
 function canHandleRequest(handlerInput, matchingIntentName, matchingPageNumber) {
+  console.log(JSON.stringify(handlerInput.requestEnvelope.request, null, 2));
+
   return (handlerInput.requestEnvelope.request.type === 'IntentRequest'
       && handlerInput.requestEnvelope.request.intent.name === matchingIntentName) ||
       (handlerInput.requestEnvelope.request.type === 'Alexa.Presentation.APL.UserEvent'
       && handlerInput.requestEnvelope.request.arguments[0] === 'choosePage'
-      && handlerInput.requestEnvelope.request.arguments[1] === matchingPageNumber);
+      && handlerInput.requestEnvelope.request.arguments[1] == matchingPageNumber);
 }
 
 const CountInEnglishIntentHandler = {

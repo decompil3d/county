@@ -73,6 +73,10 @@
         {
           "name": "numbers",
           "type": "any"
+        },
+        {
+          "name": "strings",
+          "type": "any"
         }
       ],
       "items": [
@@ -145,6 +149,20 @@
                       "text": "${data.word}"
                     }
                   ]
+                },
+                "lastItem": {
+                  "type": "Container",
+                  "alignItems": "center",
+                  "paddingTop": "10vh",
+                  "paddingLeft": "10vw",
+                  "paddingRight": "10vw",
+                  "item": {
+                    "type": "Text",
+                    "fontSize": "@titleSize",
+                    "text": "${strings.continueInstructions}",
+                    "speech": "${strings.continueInstructionsSpeech}",
+                    "id": "number11"
+                  }
                 }
               }
             }
@@ -195,6 +213,7 @@
                 "numbers": "${payload.selectedNumbers.properties.numbers}",
                 "ietf": "${payload.selectedNumbers.properties.ietf}",
                 "language": "${payload.selectedNumbers.properties.name}",
+                "strings": "${payload.strings.properties}",
                 "width": "100vw",
                 "grow": 1
               }
