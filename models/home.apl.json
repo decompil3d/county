@@ -145,52 +145,48 @@
               ]
             },
             {
-              "type": "ScrollView",
+              "type": "Sequence",
+              "height": "100vh",
+              "width": "100vw",
               "when": "${@viewportProfile == @hubRoundSmall}",
-              "height": "408dp",
-              "grow": 1,
               "paddingTop": "5vh",
               "paddingBottom": "5vh",
-              "item": {
-                "type": "Sequence",
-                "width": "100vw",
-                "numbered": true,
-                "data": "${languages}",
-                "items": [
-                  {
-                    "type": "TouchWrapper",
-                    "spacing": "10dp",
-                    "item": {
-                      "type": "Container",
-                      "alignItems": "center",
-                      "justifyContent": "center",
-                      "direction": "row",
-                      "paddingBottom": "10dp",
-                      "items": [
-                        {
-                          "type": "Image",
-                          "height": "@flagHeight",
-                          "width": "@flagWidth",
-                          "source": "https://decompil3d.github.io/county/${data.code}.svg"
-                        },
-                        {
-                          "type": "Text",
-                          "text": "${data.name}",
-                          "fontSize": "@bodySize",
-                          "spacing": "5dp"
-                        }
-                      ]
-                    },
-                    "onPress": {
-                      "type": "SendEvent",
-                      "arguments": [
-                        "choosePage",
-                        "${ordinal}"
-                      ]
-                    }
+              "numbered": true,
+              "data": "${languages}",
+              "items": [
+                {
+                  "type": "TouchWrapper",
+                  "spacing": "10dp",
+                  "item": {
+                    "type": "Container",
+                    "alignItems": "center",
+                    "justifyContent": "center",
+                    "direction": "row",
+                    "paddingBottom": "10dp",
+                    "items": [
+                      {
+                        "type": "Image",
+                        "height": "@flagHeight",
+                        "width": "@flagWidth",
+                        "source": "https://decompil3d.github.io/county/${data.code}.png"
+                      },
+                      {
+                        "type": "Text",
+                        "text": "${data.name}",
+                        "fontSize": "@bodySize",
+                        "spacing": "5dp"
+                      }
+                    ]
+                  },
+                  "onPress": {
+                    "type": "SendEvent",
+                    "arguments": [
+                      "choosePage",
+                      "${ordinal}"
+                    ]
                   }
-                ]
-              }
+                }
+              ]
             }
           ]
         }
